@@ -281,6 +281,7 @@ function death() {
     planet2.visible = false;
     planet3.visible = false;
     text("Try Again Next Time!", width / 2 - 200, height / 2)
+    text("\"R\" to restart", width / 3, height / 3);
     if(keyWentDown("r")) {
       mainPlanet = "earth";
       lives = 5;
@@ -304,11 +305,11 @@ function win() {
     }
     planet2.x = 75;
     planet2.y = height / 2;
-    planet2.velocityY = 0;
+    //planet2.velocityY = 0;
     planet2.scale = 0.5;
     planet3.x = 75;
     planet3.y = height / 2;
-    planet3.velocityY = 0;
+    //planet3.velocityY = 0;
     planet3.scale = 0.5;
     ship.visible = false;
     ship.x = width / 2;
