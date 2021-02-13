@@ -84,7 +84,7 @@ function draw() {
   }
   win();
   death();
-
+  text(lives, 100, height - 100);
   drawSprites();
   //console.log(lives);
   console.log(mainPlanet);
@@ -119,7 +119,7 @@ function clouds() {
 function obstacles() {
     if(mainPlanet != "earth" && mainPlanet != "sky") {
       score++;
-      if(frameCount % 20 == 0) {
+      if(frameCount % 15 == 0) {
         var r = Math.round(random(0, width));
         rand = Math.round(random(1, 10))
         debris = createSprite(r, 0, 10, 10);
@@ -170,6 +170,8 @@ function obstacles() {
     }
 }
 function planets() {
+  if(mainPlanet == "earth") {
+    text("left arrow for Venus, right arrow for Mars", width / 3, height / 3)
   if(mainPlanet != "sky" && mainPlanet != "going") {
     /*if(keyWentDown("right")) {
       console.log("yes");
