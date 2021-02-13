@@ -243,7 +243,7 @@ function starting() {
     planet3.visible = true;
     background("black");
   }
-  if(mainPlanet == sky) {
+  if(mainPlanet == "sky") {
     textSize(20)
     fill("black")
     text("You are an astronaut reachearching a planet.\n Nasa allowed you to choose.\n Venus or Mars\n If you reach the planet, you'll learn a fun fact!", width / 3, height / 2)
