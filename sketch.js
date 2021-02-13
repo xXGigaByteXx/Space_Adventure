@@ -172,6 +172,7 @@ function obstacles() {
 function planets() {
   if(mainPlanet == "earth") {
     text("left arrow for Venus, right arrow for Mars", width / 3, height / 3)
+  }
   if(mainPlanet != "sky" && mainPlanet != "going") {
     /*if(keyWentDown("right")) {
       console.log("yes");
