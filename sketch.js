@@ -12,6 +12,7 @@ var cloud, cloudImage, cloudGroup;
 var score = 0, lives = 5;
 var example1 = 0, mainPlanet = "sky";
 var planet1, planet1Image, planet2, planet2Image, planet3, planet3Image;
+var velo = 0, frame = 0;
 var r;
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,9 +20,9 @@ function setup() {
   eng = Eng.create(); 
   world = eng.world;
 
-  cloudGroup = new Group()
+  cloudGroup = new Group();
 
-  cloudImage = loadImage("cloud.png")
+  cloudImage = loadImage("cloud.png");
 
   ground = createSprite(width / 2, height - 40, width, 10);
   groundImage = loadImage("ground.jpg");
@@ -70,8 +71,8 @@ function draw() {
   Eng.update(eng); 
   edges = createEdgeSprites();
   background("black");
-  textSize(25);
-  fill("white");
+  textSize(20);
+  fill("blue");
   text(score, width / 2, 50);
 
   ship.collide(edges);
@@ -84,7 +85,8 @@ function draw() {
   }
   win();
   death();
-  text(lives, 100, height - 100);
+  fill("red")
+  text(lives, width - 50, 50);
   drawSprites();
   //console.log(lives);
   console.log(mainPlanet);
@@ -119,11 +121,11 @@ function clouds() {
 function obstacles() {
     if(mainPlanet != "earth" && mainPlanet != "sky") {
       score++;
-      if(frameCount % 15 == 0) {
+      if(frameCount % frame == 0) {
         var r = Math.round(random(0, width));
         rand = Math.round(random(1, 10))
         debris = createSprite(r, 0, 10, 10);
-        debris.velocityY = 20;
+        debris.velocityY = velo;
         debris.lifetime = height / 10;
         if(rand == 1) {
           debris.addImage("debris 1", debrisImage1);
@@ -170,8 +172,12 @@ function obstacles() {
     }
 }
 function planets() {
-  if(mainPlanet == "earth") {
-    text("left arrow for Venus, right arrow for Mars", width / 3, height / 3)
+  if(mainPlanet == "sky") {
+    textSize(25);
+    fill("white");
+    text("You are an astronaut reachearching a planet.\n Nasa allowed you to choose:\n Venus or Mars\n If you reach the planet, you'll learn a fun fact!\n Remeber there are many obstacles on the way. ", width / 3, height / 2.5);
+    textSize(15);
+    text("\"Enter\" the spaceship when you're ready", width / 2.5, height / 1.65)
   }
   if(mainPlanet != "sky" && mainPlanet != "going") {
     /*if(keyWentDown("right")) {
@@ -201,6 +207,8 @@ function planets() {
       ship.changeImage("ship2");
       ship.scale = 0.3;
       mainPlanet = "going";
+      velo = 17.5;
+      frame = 12;
     }
     if(mainPlanet == "mars") {
       background("black");
@@ -216,6 +224,8 @@ function planets() {
       ship.changeImage("ship2");
       ship.scale = 0.3;
       mainPlanet = "going";
+      velo = 22.5;
+      frame = 8;
     }
   }
 }
@@ -225,11 +235,11 @@ function starting() {
     ship.changeImage("ship2");
     example1 = 1;
   }
-  if(cloudGroup.size() < 10 && example1 == 1) {
+  if(cloudGroup.size() < 50 && example1 == 1) {
     clouds();
     mainPlanet = "earth";
   }
-  else if (cloudGroup.size() >= 10) {
+  else if (cloudGroup.size() >= 50) {
     example1 = 2;
   }
   if(example1 == 1) {
@@ -245,11 +255,16 @@ function starting() {
     planet2.visible = true;
     planet3.visible = true;
     background("black");
+    fill("white");
+    text("Left arrow for Venus, Right arrow for Mars", width / 2.75, height / 4)
+    
   }
-  if(mainPlanet == "sky") {
-    textSize(20)
-    fill("black")
-    text("You are an astronaut reachearching a planet.\n Nasa allowed you to choose.\n Venus or Mars\n If you reach the planet, you'll learn a fun fact!", width / 3, height / 2)
+  if(mainPlanet == "earth") {
+    lives = 5;
+    score = 0;
+    ship.visible = true;
+    planet2.velocityY = 0;
+    planet3.velocityY = 0;
   }
 }
 function controls() {
@@ -283,13 +298,15 @@ function death() {
     planet1.visible = false;
     planet2.visible = false;
     planet3.visible = false;
-    text("Try Again Next Time!", width / 2 - 200, height / 2)
-    text("\"R\" to restart", width / 3, height / 3);
+    fill("white");
+    text("Try Again Next Time!", width / 2.25, height / 2);
+    fill("white");
+    text("\"R\" to restart", width / 2.15, height / 1.75);
     if(keyWentDown("r")) {
-      mainPlanet = "earth";
       lives = 5;
       score = 0;
       ship.visible = true;
+      mainPlanet = "earth";
     }
   }
 }
@@ -300,17 +317,32 @@ function win() {
   if(mainPlanet == "win") {
     if(planet2.velocityY == 15) {
       textSize(25);
-    text("YAAAAY! You found out that Venus is hotter than mercury!\n You know why? Well according to our rescearch and your travel, the atmosphere is made out of carbon dioxide!\n It traps hot air in the atmophere. If we don't switch to eco-friendly everything, earth might just be venus", width / 10, height / 2)
+      fill("white");
+      text("YAAAAY! You found out that Venus is hotter than mercury!\n You know why? Well according to our rescearch and your travel, the atmosphere is made out of carbon dioxide!\n It traps hot air in the atmophere. If we don't switch to eco-friendly everything, earth might just be venus", width / 10, height / 2)
+      text("\"Space\" to restart", width / 2.15, height / 1.5);
+      if(keyWentDown("space")) {
+        lives = 5;
+        score = 0;
+        ship.visible = true;
+        planet2.velocityY = 0;
+        planet3.velocityY = 0;
+        mainPlanet = "earth";
+      }
     }
     if(planet3.velocityY == 15) {
       textSize(25);
-      text("YAAAAY! You found out that even though mars is red, it is pretty cold!", width / 4, height / 2);
+      fill("white");
+      text("YAAAAY! According to our research and your travel, we found out that even though mars is red, it is pretty cold!", width / 10, height / 2);
+      text("\"Space\" to restart", width / 2.15, height / 1.5);
+      if(keyWentDown("space")) {
+        mainPlanet = "earth";
+      }
     }
     planet2.x = 75;
     planet2.y = height / 2;
     //planet2.velocityY = 0;
     planet2.scale = 0.5;
-    planet3.x = 75;
+    planet3.x = width - 75;
     planet3.y = height / 2;
     //planet3.velocityY = 0;
     planet3.scale = 0.5;
