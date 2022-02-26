@@ -200,7 +200,7 @@ function planets() {
       background("black");
       planet2.scale = 4;
       planet2.x = width / 2
-      planet2.y = -7500;
+      planet2.y = -10000;
       planet2.velocityY = 15;
       planet1.visible = false;
       planet2.visible = true;
@@ -217,7 +217,7 @@ function planets() {
       background("black");
       planet3.scale = 4;
       planet3.x = width / 2
-      planet3.y = -7500;
+      planet3.y = -15000;
       planet3.velocityY = 15;
       planet1.visible = false;
       planet2.visible = false;
