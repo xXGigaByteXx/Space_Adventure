@@ -14,6 +14,7 @@ var example1 = 0, mainPlanet = "sky";
 var planet1, planet1Image, planet2, planet2Image, planet3, planet3Image;
 var velo = 0, frame = 0;
 var r;
+var cloudDone = false;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
@@ -78,7 +79,9 @@ function draw() {
   ship.collide(edges);
 
   if(mainPlanet != "end" && mainPlanet != "win") {
-    controls();
+    if(cloudDone == true) {
+      controls();
+    }
     starting();
     planets();
     obstacles();
@@ -241,6 +244,7 @@ function starting() {
   }
   else if (cloudGroup.size() >= 50) {
     example1 = 2;
+    cloudDone = true;
   }
   if(example1 == 1) {
     ground.velocityY = 10;
